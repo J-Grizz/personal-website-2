@@ -3,13 +3,21 @@ import { Transition } from '@headlessui/react'
 
 const Terminal: FC = () => {
   const [isShowing, setIsShowing] = useState(true)
+  const [introText, setIntroText] = useState('')
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
+    setInterval(() => {
       setIsShowing((isShowing) => !isShowing)
     }, 1000)
 
-    return () => clearInterval(intervalId)
+    const text = 'hello world'
+    for (let i = 0; i < text.length; i++) {
+      setTimeout(() => {
+        setIntroText((introText) => introText + text[i])
+      }, 100 * i)
+    }
   }, [])
+
   return (
     <div className="w-2/3 h-2/3 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded">
       <div className="flex items-center h-3">
@@ -24,7 +32,7 @@ const Terminal: FC = () => {
           <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
         </svg>
 
-		<p className='text-white'>Hello.. Fancy meeting you here...</p>
+        <p className="text-white">{introText}</p>
 
         <Transition
           show={isShowing}
