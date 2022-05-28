@@ -1,11 +1,11 @@
 import { FC } from 'react'
+import Terminal from 'components/Terminal/Terminal'
 
 const Landing: FC = () => {
   return (
-    <>
-      Welcome to the landing page.. I want it to be a awesome background with a glassmorphism terminal that one can use to
-      interact with the site
-    </>
+    <main className="w-full h-full flex justify-center items-center bg-nature-dark bg-center bg-cover bg-no-repeat">
+      <Terminal />
+    </main>
   )
 }
 
