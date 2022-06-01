@@ -5,19 +5,29 @@ import { v4 as uuidv4 } from 'uuid'
 
 type MyProps = {}
 type MyState = {
+  starterArray: string[]
   introArray: string[]
+  showPrompt: boolean
 }
 class Terminal extends React.Component<MyProps, MyState> {
   state: MyState = {
+    starterArray: [],
     introArray: [],
+    showPrompt: false,
   }
 
   componentDidMount() {
     // Data to import from sanity
     const starterArray = [
-      'The very first line that needs to print before going to the next line',
+      'The very first line that needs to finish typing before going to the next line',
       'The second line that needs to start being typed after the first line',
+      'Just testing a third line',
+      'and a forth for shits and gigs',
     ]
+
+    this.setState({
+      starterArray,
+    })
 
     const createTypingEffect = (text: string, index: number) => {
       for (let i = 0; i < text.length; i++) {
@@ -39,6 +49,19 @@ class Terminal extends React.Component<MyProps, MyState> {
       createTypingEffect(starterText, starterIndex)
     })
   }
+
+  componentDidUpdate() {
+    if (
+      this.state.introArray[this.state.introArray.length - 1].length ===
+        this.state.starterArray[this.state.starterArray.length - 1].length &&
+      !this.state.showPrompt
+    ) {
+      this.setState({
+        showPrompt: true,
+      })
+    }
+  }
+
   render() {
     return (
       <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded">
@@ -50,10 +73,12 @@ class Terminal extends React.Component<MyProps, MyState> {
             </div>
           ))}
           {/* Actual prompt starts here */}
-          <div className="flex">
-            <TerminalPrompt />
-            <TerminalCursor />
-          </div>
+          {this.state.showPrompt && (
+            <div className="flex">
+              <TerminalPrompt />
+              <TerminalCursor />
+            </div>
+          )}
         </div>
       </div>
     )
