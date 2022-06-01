@@ -21,45 +21,45 @@ class Terminal extends React.Component<MyProps, MyState> {
     const starterArray = [
       'The very first line that needs to finish typing before going to the next line',
       'The second line that needs to start being typed after the first line',
-      'Just testing a third line',
-      'and a forth for shits and gigs',
     ]
 
     this.setState({
       starterArray,
     })
 
-    const createTypingEffect = (text: string, index: number) => {
-      for (let i = 0; i < text.length; i++) {
-        setTimeout(() => {
-          let arrayCopy = this.state.introArray.slice()
-          this.setState((state) => ({
-            introArray: [...state.introArray.slice(0, index), arrayCopy[index] + text[i], ...state.introArray.slice(index + 1)],
-          }))
-        }, 100 * i)
-      }
+    const createTypingEffect = async (text: string, index: number) => {
+      return Promise.all(
+        text.split('').map(
+          (character, characterIndex) =>
+            new Promise((res) => {
+              setTimeout(() => {
+                let arrayCopy = this.state.introArray.slice()
+                this.setState((state) => ({
+                  introArray: [...state.introArray.slice(0, index), arrayCopy[index] + character, ...state.introArray.slice(index + 1)],
+                }))
+                res(null)
+              }, 100 * characterIndex)
+            })
+        )
+      )
     }
-    starterArray.forEach((starterText, starterIndex) => {
-      // Setting empty string for each line in starterArray so we dont get undefined as first character
-      this.setState((state) => ({
-        introArray: [...state.introArray, ''],
-      }))
+    const cycle = async () => {
+      let i = 0
+      for (const starterText of starterArray) {
+        // Setting empty string for each line in starterArray so we dont get undefined as first character
+        this.setState((state) => ({
+          introArray: [...state.introArray, ''],
+        }))
 
-      // Need to wait for first line to finish typing before starting the second line
-      createTypingEffect(starterText, starterIndex)
-    })
-  }
-
-  componentDidUpdate() {
-    if (
-      this.state.introArray[this.state.introArray.length - 1].length ===
-        this.state.starterArray[this.state.starterArray.length - 1].length &&
-      !this.state.showPrompt
-    ) {
+        await createTypingEffect(starterText, i)
+        i++
+      }
       this.setState({
         showPrompt: true,
       })
     }
+
+    cycle()
   }
 
   render() {
