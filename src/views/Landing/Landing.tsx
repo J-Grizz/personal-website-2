@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Terminal from 'components/Terminal/TerminalClass'
+import Terminal from 'components/Terminal/Terminal'
 
 const Landing: FC = () => {
   return (

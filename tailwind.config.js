@@ -4,6 +4,15 @@ module.exports = {
       backgroundImage: {
         'nature-dark': "url('/public/img/simple.jpg')",
       },
+      keyframes: {
+        blink: {
+          '0%': { opacity: 1 },
+          '50%': { opacity: 0 },
+        },
+      },
+      animation: {
+        'blinking-cursor': 'blink 1s step-end infinite',
+      },
     },
   },
   darkMode: 'class',

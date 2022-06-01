@@ -18,10 +18,7 @@ class Terminal extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     // Data to import from sanity
-    const starterArray = [
-      'The very first line that needs to finish typing before going to the next line',
-      'The second line that needs to start being typed after the first line',
-    ]
+    const starterArray = ['Hello world...']
 
     this.setState({
       starterArray,
@@ -35,7 +32,11 @@ class Terminal extends React.Component<MyProps, MyState> {
               setTimeout(() => {
                 let arrayCopy = this.state.introArray.slice()
                 this.setState((state) => ({
-                  introArray: [...state.introArray.slice(0, index), arrayCopy[index] + character, ...state.introArray.slice(index + 1)],
+                  introArray: [
+                    ...state.introArray.slice(0, index),
+                    arrayCopy[index] + character,
+                    ...state.introArray.slice(index + 1),
+                  ],
                 }))
                 res(null)
               }, 100 * characterIndex)
