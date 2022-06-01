@@ -2,7 +2,7 @@ import { FC, useState, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 
 const TerminalCursor: FC = () => {
-  // Should pass this as a prop from the Terminal component
+  // Rather update as an animation
   const [isShowing, setIsShowing] = useState(true)
 
   useEffect(() => {
