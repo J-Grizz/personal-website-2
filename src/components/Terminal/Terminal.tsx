@@ -5,24 +5,18 @@ import { v4 as uuidv4 } from 'uuid'
 
 type MyProps = {}
 type MyState = {
-  starterArray: string[]
   introArray: string[]
   showPrompt: boolean
 }
 class Terminal extends React.Component<MyProps, MyState> {
   state: MyState = {
-    starterArray: [],
     introArray: [],
     showPrompt: false,
   }
 
   componentDidMount() {
     // Data to import from sanity
-    const starterArray = ['Hello world...']
-
-    this.setState({
-      starterArray,
-    })
+    const starterArray = ['Hello world...', 'and the next one too']
 
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
@@ -30,11 +24,10 @@ class Terminal extends React.Component<MyProps, MyState> {
           (character, characterIndex) =>
             new Promise((res) => {
               setTimeout(() => {
-                let arrayCopy = this.state.introArray.slice()
                 this.setState((state) => ({
                   introArray: [
                     ...state.introArray.slice(0, index),
-                    arrayCopy[index] + character,
+                    [...this.state.introArray][index] + character,
                     ...state.introArray.slice(index + 1),
                   ],
                 }))
@@ -44,6 +37,7 @@ class Terminal extends React.Component<MyProps, MyState> {
         )
       )
     }
+
     const cycle = async () => {
       let i = 0
       for (const starterText of starterArray) {
@@ -55,12 +49,9 @@ class Terminal extends React.Component<MyProps, MyState> {
         await createTypingEffect(starterText, i)
         i++
       }
-      this.setState({
-        showPrompt: true,
-      })
     }
 
-    cycle()
+    setTimeout(() => cycle(), 400)
   }
 
   render() {
