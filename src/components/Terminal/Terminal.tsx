@@ -10,6 +10,7 @@ interface MyState {
   typedCommand: string
 }
 class Terminal extends React.Component<MyProps, MyState> {
+  typedCommandInput = React.createRef<HTMLInputElement>()
   state: MyState = {
     introArray: [],
     showPrompt: false,
@@ -58,6 +59,18 @@ class Terminal extends React.Component<MyProps, MyState> {
     }
 
     setTimeout(() => TypeIntroLines(), 400)
+    document.addEventListener('keydown', this.listenForKeyPress, false)
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.listenForKeyPress, false)
+  }
+
+  listenForKeyPress = (e: KeyboardEvent) => {
+    this.typedCommandInput.current?.focus()
+    if (e.key === 'Enter') {
+      console.log('command submitted')
+    }
   }
 
   handleTypedCommand = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +84,7 @@ class Terminal extends React.Component<MyProps, MyState> {
           {this.state.introArray.map((introLine) => (
             <div className="flex items-center" key={uuidv4()}>
               <TerminalPrompt />
-              <p className="">{introLine}</p>
+              <p>{introLine}</p>
             </div>
           ))}
           {/* Actual prompt starts here */}
@@ -79,7 +92,7 @@ class Terminal extends React.Component<MyProps, MyState> {
             <div className="flex">
               <TerminalPrompt />
               <input
-                ref="nameInput"
+                ref={this.typedCommandInput}
                 autoFocus
                 onChange={this.handleTypedCommand}
                 className="opacity-0 w-0"
