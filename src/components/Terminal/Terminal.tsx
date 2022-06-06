@@ -77,10 +77,24 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   handleCommandSubmit = () => {
-    this.setState((state) => ({
-      commandHistory: [...state.commandHistory, state.typedCommand],
-      typedCommand: '',
-    }))
+    // TODO: setup command constants
+    switch (this.state.typedCommand) {
+      case 'clear':
+        this.setState({
+          introArray: [],
+          commandHistory: [],
+          typedCommand: '',
+        })
+        break
+      case 'help':
+        console.log('Print multiple lines of text in the console')
+        break
+      default:
+        this.setState((state) => ({
+          commandHistory: [...state.commandHistory, state.typedCommand],
+          typedCommand: '',
+        }))
+    }
   }
 
   handleTypedCommand = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,8 +129,8 @@ class Terminal extends React.Component<MyProps, MyState> {
               <input
                 onChange={this.handleTypedCommand}
                 ref={this.typedCommandInput}
-                value={typedCommand}
                 className="opacity-0 w-0"
+                value={typedCommand}
                 type="text"
                 autoFocus
               />
