@@ -6,13 +6,16 @@ import { v4 as uuidv4 } from 'uuid'
 interface MyProps {}
 interface MyState {
   introArray: string[]
+  commandHistory: string[]
   showPrompt: boolean
   typedCommand: string
 }
+
 class Terminal extends React.Component<MyProps, MyState> {
   typedCommandInput = React.createRef<HTMLInputElement>()
   state: MyState = {
     introArray: [],
+    commandHistory: [],
     showPrompt: false,
     typedCommand: '',
   }
@@ -30,7 +33,7 @@ class Terminal extends React.Component<MyProps, MyState> {
                 this.setState((state) => ({
                   introArray: [
                     ...state.introArray.slice(0, index),
-                    [...this.state.introArray][index] + character,
+                    [...state.introArray][index] + character,
                     ...state.introArray.slice(index + 1),
                   ],
                 }))
@@ -69,8 +72,15 @@ class Terminal extends React.Component<MyProps, MyState> {
   listenForKeyPress = (e: KeyboardEvent) => {
     this.typedCommandInput.current?.focus()
     if (e.key === 'Enter') {
-      console.log('command submitted')
+      this.handleCommandSubmit()
     }
+  }
+
+  handleCommandSubmit = () => {
+    this.setState((state) => ({
+      commandHistory: [...state.commandHistory, state.typedCommand],
+      typedCommand: '',
+    }))
   }
 
   handleTypedCommand = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,29 +88,39 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   render() {
+    const { introArray, commandHistory, showPrompt, typedCommand } = this.state
     return (
       <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white">
         <div className="flex flex-col">
-          {this.state.introArray.map((introLine) => (
+          {/* Intro */}
+          {introArray.map((introLine) => (
             <div className="flex items-center" key={uuidv4()}>
               <TerminalPrompt />
               <p>{introLine}</p>
             </div>
           ))}
+
+          {/* Command history */}
+          {commandHistory.map((command) => (
+            <div className="flex items-center" key={uuidv4()}>
+              <TerminalPrompt />
+              <p>{command}</p>
+            </div>
+          ))}
+
           {/* Actual prompt starts here */}
-          {this.state.showPrompt && (
+          {showPrompt && (
             <div className="flex">
               <TerminalPrompt />
               <input
-                ref={this.typedCommandInput}
-                autoFocus
                 onChange={this.handleTypedCommand}
+                ref={this.typedCommandInput}
+                value={typedCommand}
                 className="opacity-0 w-0"
                 type="text"
-                name="test"
-                id="test"
+                autoFocus
               />
-              <p>{this.state.typedCommand}</p>
+              <p>{typedCommand}</p>
               <TerminalCursor />
             </div>
           )}
