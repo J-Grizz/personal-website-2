@@ -10,7 +10,7 @@ const TerminalCursor: FC = () => {
       stroke="currentColor"
       strokeWidth={2}
     >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8 4m-1-1v18" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8 4m-7-1v18" />
     </svg>
   )
 }
