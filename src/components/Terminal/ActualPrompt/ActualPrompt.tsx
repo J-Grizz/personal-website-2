@@ -1,12 +1,13 @@
 import { FC } from 'react'
 import TerminalCursor from 'icons/TerminalCursor'
 import TerminalPrompt from 'icons/TerminalPrompt'
+import { enteredCommand } from '../types'
 import { v4 as uuidv4 } from 'uuid'
 
 interface ActualPromptProps {
   showPrompt: boolean
   typedCommand: string
-  commandHistory: string[]
+  commandHistory: enteredCommand[]
   inputRef: React.RefObject<HTMLInputElement>
   onTypedCommand: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
@@ -17,7 +18,8 @@ const ActualPrompt: FC<ActualPromptProps> = ({ commandHistory, typedCommand, sho
       {commandHistory.map((command) => (
         <div className="flex items-center" key={uuidv4()}>
           <TerminalPrompt />
-          <p>{command}</p>
+          <p>{command.command}</p>
+          {command?.jsx}
         </div>
       ))}
 

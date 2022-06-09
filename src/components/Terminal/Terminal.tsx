@@ -1,12 +1,13 @@
 import React from 'react'
 import TerminalPrompt from 'icons/TerminalPrompt'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
+import { enteredCommand } from './types'
 import { v4 as uuidv4 } from 'uuid'
 
 interface MyProps {}
 interface MyState {
   introArray: string[]
-  commandHistory: string[]
+  commandHistory: enteredCommand[]
   showPrompt: boolean
   typedCommand: string
 }
@@ -22,7 +23,7 @@ class Terminal extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     // Data to import from sanity
-    const starterArray = ['Hello world...', 'nexr line']
+    const starterArray = ['Hello world...', 'next line']
 
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
@@ -77,29 +78,48 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   handleCommandSubmit = () => {
-    // TODO: setup command constants
-    switch (this.state.typedCommand) {
-      case 'clear':
-        this.setState({
-          introArray: [],
-          commandHistory: [],
-          typedCommand: '',
-        })
-        break
-      case 'help':
-        console.log('Print multiple lines of text in the console')
-        break
-      default:
-        this.setState((state) => ({
-          commandHistory: [...state.commandHistory, state.typedCommand],
-          typedCommand: '',
-        }))
+    const validCommands = this.validCommands
+    const currentCommand = this.state.typedCommand
+    validCommands.forEach((command) => {
+      if (this.state.typedCommand === command.command) {
+        command.action()
+      }
+    })
+
+    if (!validCommands.some((e) => e.command === currentCommand)) {
+      this.setState((state) => ({
+        commandHistory: [...state.commandHistory, { command: state.typedCommand, notFound: true }],
+        typedCommand: '',
+      }))
     }
   }
 
   handleTypedCommand = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ typedCommand: e.target.value })
   }
+
+  validCommands = [
+    {
+      command: 'clear',
+      description: 'Clear the terminal',
+      action: () => {
+        this.setState({
+          introArray: [],
+          commandHistory: [],
+          typedCommand: '',
+        })
+      },
+    },
+    {
+      command: 'help',
+      description: 'Show help',
+      action: () =>
+        this.setState((state) => ({
+          commandHistory: [...state.commandHistory, { command: state.typedCommand, notFound: false, jsx: <div>help</div> }],
+          typedCommand: '',
+        })),
+    },
+  ]
 
   render() {
     const { introArray, commandHistory, showPrompt, typedCommand } = this.state
