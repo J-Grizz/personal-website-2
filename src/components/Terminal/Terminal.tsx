@@ -1,6 +1,6 @@
 import React from 'react'
-import TerminalCursor from 'icons/TerminalCursor'
 import TerminalPrompt from 'icons/TerminalPrompt'
+import ActualPrompt from './ActualPrompt/ActualPrompt'
 import { v4 as uuidv4 } from 'uuid'
 
 interface MyProps {}
@@ -22,7 +22,7 @@ class Terminal extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     // Data to import from sanity
-    const starterArray = ['Hello world...']
+    const starterArray = ['Hello world...', 'nexr line']
 
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
@@ -62,14 +62,14 @@ class Terminal extends React.Component<MyProps, MyState> {
     }
 
     setTimeout(() => TypeIntroLines(), 400)
-    document.addEventListener('keydown', this.listenForKeyPress, false)
+    document.addEventListener('keydown', this.listenForAnyKeyPress, false)
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.listenForKeyPress, false)
+    document.removeEventListener('keydown', this.listenForAnyKeyPress, false)
   }
 
-  listenForKeyPress = (e: KeyboardEvent) => {
+  listenForAnyKeyPress = (e: KeyboardEvent) => {
     this.typedCommandInput.current?.focus()
     if (e.key === 'Enter') {
       this.handleCommandSubmit()
@@ -114,30 +114,13 @@ class Terminal extends React.Component<MyProps, MyState> {
             </div>
           ))}
 
-          {/* Command history */}
-          {commandHistory.map((command) => (
-            <div className="flex items-center" key={uuidv4()}>
-              <TerminalPrompt />
-              <p>{command}</p>
-            </div>
-          ))}
-
-          {/* Actual prompt starts here */}
-          {showPrompt && (
-            <div className="flex">
-              <TerminalPrompt />
-              <input
-                onChange={this.handleTypedCommand}
-                ref={this.typedCommandInput}
-                className="opacity-0 w-0"
-                value={typedCommand}
-                type="text"
-                autoFocus
-              />
-              <p>{typedCommand}</p>
-              <TerminalCursor />
-            </div>
-          )}
+          <ActualPrompt
+            showPrompt={showPrompt}
+            typedCommand={typedCommand}
+            commandHistory={commandHistory}
+            onTypedCommand={this.handleTypedCommand}
+            inputRef={this.typedCommandInput}
+          />
         </div>
       </div>
     )
