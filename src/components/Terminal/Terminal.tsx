@@ -78,15 +78,15 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   handleCommandSubmit = () => {
-    const validCommands = this.validCommands
-    const currentCommand = this.state.typedCommand
-    validCommands.forEach((command) => {
+    let invalidCommand = true
+    this.validCommands.forEach((command) => {
       if (this.state.typedCommand === command.command) {
         command.action()
+        invalidCommand = false
       }
     })
 
-    if (!validCommands.some((e) => e.command === currentCommand)) {
+    if (invalidCommand) {
       this.setState((state) => ({
         commandHistory: [...state.commandHistory, { command: state.typedCommand, notFound: true }],
         typedCommand: '',
