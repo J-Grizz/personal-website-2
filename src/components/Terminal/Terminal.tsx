@@ -3,6 +3,7 @@ import TerminalPrompt from 'icons/TerminalPrompt'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
 import { enteredCommand } from './types'
 import { v4 as uuidv4 } from 'uuid'
+import sanityClient from 'client'
 
 interface MyProps {}
 interface MyState {
@@ -22,9 +23,11 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    // Data to import from sanity
-    const starterArray = ['Hello world...', 'next line']
-
+    let starterArray: string[] = []
+    sanityClient.fetch(`*[_type == "introduction_line"]`).then((intro) => {
+      starterArray = intro.map((line:any ) => line.line)
+    })
+      
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
         text.split('').map(
