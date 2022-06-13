@@ -3,7 +3,8 @@ import TerminalPrompt from 'icons/TerminalPrompt'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
 import { enteredCommand } from './types'
 import { v4 as uuidv4 } from 'uuid'
-import sanityClient from 'client'
+import { client } from 'App'
+import { gql } from '@apollo/client'
 
 interface MyProps {}
 interface MyState {
@@ -12,6 +13,14 @@ interface MyState {
   showPrompt: boolean
   typedCommand: string
 }
+
+const introQuery = gql`
+  {
+    allIntroLine {
+      line
+    }
+  }
+`
 
 class Terminal extends React.Component<MyProps, MyState> {
   typedCommandInput = React.createRef<HTMLInputElement>()
@@ -24,10 +33,11 @@ class Terminal extends React.Component<MyProps, MyState> {
 
   componentDidMount() {
     let starterArray: string[] = []
-    sanityClient.fetch(`*[_type == "introduction_line"]`).then((intro) => {
-      starterArray = intro.map((line:any ) => line.line)
+
+    client.query({ query: introQuery }).then((data: any) => {
+      starterArray = data.data.allIntroLine.map((line: any) => line.line)
     })
-      
+
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
         text.split('').map(
