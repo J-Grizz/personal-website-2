@@ -3,9 +3,10 @@ import TerminalPrompt from 'icons/TerminalPrompt'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
 import { enteredCommand } from './types'
 import { v4 as uuidv4 } from 'uuid'
+import { IntroLine } from 'generated/graphql'
 
 interface MyProps {
-  introLines?: string[]
+  introLines?: IntroLine[]
 }
 
 interface MyState {
@@ -25,7 +26,7 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   componentDidMount() {
-    let starterArray = this.props.introLines || []
+    let starterArray = this.props.introLines?.map((line) => line.line)
 
     const createTypingEffect = async (text: string, index: number) => {
       return Promise.all(
@@ -49,14 +50,16 @@ class Terminal extends React.Component<MyProps, MyState> {
 
     const TypeIntroLines = async () => {
       let i = 0
-      for (const starterText of starterArray) {
-        // Setting empty string for each line in starterArray so we don't get undefined as first character
-        this.setState((state) => ({
-          introArray: [...state.introArray, ''],
-        }))
+      if (starterArray) {
+        for (const starterText of starterArray) {
+          // Setting empty string for each line in starterArray so we don't get undefined as first character
+          this.setState((state) => ({
+            introArray: [...state.introArray, ''],
+          }))
 
-        await createTypingEffect(starterText, i)
-        i++
+          await createTypingEffect(starterText || '', i)
+          i++
+        }
       }
       // Showing prompt after last line is typed
       setTimeout(() => {
