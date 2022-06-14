@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.6.8",
+    "@graphql-codegen/typescript-react-apollo": "^3.2.16",
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
     "@testing-library/jest-dom": "^5.16.4",

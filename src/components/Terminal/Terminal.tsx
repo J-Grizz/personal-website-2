@@ -50,7 +50,7 @@ class Terminal extends React.Component<MyProps, MyState> {
     const TypeIntroLines = async () => {
       let i = 0
       for (const starterText of starterArray) {
-        // Setting empty string for each line in starterArray so we dont get undefined as first character
+        // Setting empty string for each line in starterArray so we don't get undefined as first character
         this.setState((state) => ({
           introArray: [...state.introArray, ''],
         }))
