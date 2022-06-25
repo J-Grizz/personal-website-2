@@ -1,9 +1,11 @@
 import React from 'react'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
 import CommandResults from './CommandResults/CommandResults'
-import { enteredCommand, validCommand } from './types'
+import { EnteredCommand, ValidCommand } from './types'
 import { IntroLine } from 'generated/graphql'
 import Intro from './Intro/Intro'
+import HelpJSX from './HelpJSX/HelpJSX'
+import CommandNotFoundJSX from './CommandNotFoundJSX/CommandNotFound'
 
 interface MyProps {
   introLines?: IntroLine[]
@@ -11,7 +13,7 @@ interface MyProps {
 
 interface MyState {
   introArray: string[]
-  enteredCommands: enteredCommand[]
+  enteredCommands: EnteredCommand[]
   showPrompt: boolean
   typedCommand: string
 }
@@ -83,17 +85,20 @@ class Terminal extends React.Component<MyProps, MyState> {
   }
 
   handleCommandSubmit = () => {
-    let invalidCommand = true
+    let isInvalidCommand = true
     this.validCommands.forEach((command) => {
       if (this.state.typedCommand === command.command) {
         command.action()
-        invalidCommand = false
+        isInvalidCommand = false
       }
     })
 
-    if (invalidCommand) {
+    if (isInvalidCommand) {
       this.setState((state) => ({
-        enteredCommands: [...state.enteredCommands, { command: state.typedCommand, notFound: true }],
+        enteredCommands: [
+          ...state.enteredCommands,
+          { command: state.typedCommand, notFound: true, jsx: <CommandNotFoundJSX invalidCommand={this.state.typedCommand} /> },
+        ],
         typedCommand: '',
       }))
     }
@@ -103,10 +108,10 @@ class Terminal extends React.Component<MyProps, MyState> {
     this.setState({ typedCommand: e.target.value })
   }
 
-  validCommands: validCommand[] = [
+  validCommands: ValidCommand[] = [
     {
       command: 'clear',
-      description: 'Clear the terminal',
+      description: 'Clears the terminal',
       action: () => {
         this.setState({
           introArray: [],
@@ -117,17 +122,17 @@ class Terminal extends React.Component<MyProps, MyState> {
     },
     {
       command: 'help',
-      description: 'Show help',
+      description: 'Display list of available commands',
       action: () =>
         this.setState((state) => ({
           enteredCommands: [
             ...state.enteredCommands,
-            { command: state.typedCommand, notFound: false, jsx: <div>help section</div> },
+            { command: state.typedCommand, notFound: false, jsx: <HelpJSX validCommands={this.validCommands} /> },
           ],
           typedCommand: '',
         })),
     },
-    { command: 'goto ', description: 'Display list of links on a website', action: () => {} },
+    { command: 'goto', description: 'Choose which page to go to', action: () => {} },
   ]
 
   render() {

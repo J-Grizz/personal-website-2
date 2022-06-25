@@ -1,10 +1,10 @@
-export interface validCommand {
+export interface ValidCommand {
   command: string
   description: string
   action: () => void
 }
 
-export interface enteredCommand {
+export interface EnteredCommand {
   command: string
   notFound: boolean
   jsx?: JSX.Element
