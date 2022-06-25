@@ -1,7 +1,7 @@
 export interface validCommand {
   command: string
   description: string
-  arguments?: string[]
+  action: () => void
 }
 
 export interface enteredCommand {

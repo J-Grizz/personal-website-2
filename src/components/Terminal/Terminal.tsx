@@ -1,9 +1,9 @@
 import React from 'react'
-import TerminalPrompt from 'icons/TerminalPromptIcon'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
-import { enteredCommand } from './types'
-import { v4 as uuidv4 } from 'uuid'
+import CommandResults from './CommandResults/CommandResults'
+import { enteredCommand, validCommand } from './types'
 import { IntroLine } from 'generated/graphql'
+import Intro from './Intro/Intro'
 
 interface MyProps {
   introLines?: IntroLine[]
@@ -11,7 +11,7 @@ interface MyProps {
 
 interface MyState {
   introArray: string[]
-  commandHistory: enteredCommand[]
+  enteredCommands: enteredCommand[]
   showPrompt: boolean
   typedCommand: string
 }
@@ -20,7 +20,7 @@ class Terminal extends React.Component<MyProps, MyState> {
   typedCommandInput = React.createRef<HTMLInputElement>()
   state: MyState = {
     introArray: [],
-    commandHistory: [],
+    enteredCommands: [],
     showPrompt: false,
     typedCommand: '',
   }
@@ -93,7 +93,7 @@ class Terminal extends React.Component<MyProps, MyState> {
 
     if (invalidCommand) {
       this.setState((state) => ({
-        commandHistory: [...state.commandHistory, { command: state.typedCommand, notFound: true }],
+        enteredCommands: [...state.enteredCommands, { command: state.typedCommand, notFound: true }],
         typedCommand: '',
       }))
     }
@@ -103,14 +103,14 @@ class Terminal extends React.Component<MyProps, MyState> {
     this.setState({ typedCommand: e.target.value })
   }
 
-  validCommands = [
+  validCommands: validCommand[] = [
     {
       command: 'clear',
       description: 'Clear the terminal',
       action: () => {
         this.setState({
           introArray: [],
-          commandHistory: [],
+          enteredCommands: [],
           typedCommand: '',
         })
       },
@@ -120,29 +120,26 @@ class Terminal extends React.Component<MyProps, MyState> {
       description: 'Show help',
       action: () =>
         this.setState((state) => ({
-          commandHistory: [...state.commandHistory, { command: state.typedCommand, notFound: false, jsx: <div>help</div> }],
+          enteredCommands: [
+            ...state.enteredCommands,
+            { command: state.typedCommand, notFound: false, jsx: <div>help section</div> },
+          ],
           typedCommand: '',
         })),
     },
+    { command: 'goto ', description: 'Display list of links on a website', action: () => {} },
   ]
 
   render() {
-    const { introArray, commandHistory, showPrompt, typedCommand } = this.state
+    const { introArray, enteredCommands, showPrompt, typedCommand } = this.state
     return (
       <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white">
         <div className="flex flex-col">
-          {/* Intro */}
-          {introArray.map((introLine) => (
-            <div className="flex items-center" key={uuidv4()}>
-              <TerminalPrompt />
-              <p>{introLine}</p>
-            </div>
-          ))}
-
+          <Intro introArray={introArray} />
+          <CommandResults enteredCommands={enteredCommands} />
           <ActualPrompt
             showPrompt={showPrompt}
             typedCommand={typedCommand}
-            commandHistory={commandHistory}
             onTypedCommand={this.handleTypedCommand}
             inputRef={this.typedCommandInput}
           />
