@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-const TerminalPrompt: FC = () => {
+const TerminalPromptIcon: FC = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,4 @@ const TerminalPrompt: FC = () => {
   )
 }
 
-export default TerminalPrompt
+export default TerminalPromptIcon

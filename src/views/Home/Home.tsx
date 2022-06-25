@@ -1,11 +1,11 @@
 import { FC } from 'react'
+import Navigation from 'components/Navigation/Navigation'
 
 const Home: FC = () => {
   return (
-    <>
-      Welcome to the home page, should just be a simple page intro/descriptions page that looks nice with links to projects /
-      blogs
-    </>
+    <main className="w-full h-full flex bg-home-background-dark bg-center bg-cover bg-no-repeat">
+      <Navigation />
+    </main>
   )
 }
 

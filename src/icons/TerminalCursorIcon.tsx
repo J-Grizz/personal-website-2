@@ -1,10 +1,10 @@
 import { FC } from 'react'
 
-interface TerminalCursorProps {
+interface TerminalCursorIconProps {
   blink?: boolean;
 }
 
-const TerminalCursor: FC<TerminalCursorProps> = (props) => {
+const TerminalCursorIcon: FC<TerminalCursorIconProps> = (props) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -19,4 +19,4 @@ const TerminalCursor: FC<TerminalCursorProps> = (props) => {
   )
 }
 
-export default TerminalCursor
+export default TerminalCursorIcon

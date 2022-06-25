@@ -1,5 +1,5 @@
 import React from 'react'
-import TerminalPrompt from 'icons/TerminalPrompt'
+import TerminalPrompt from 'icons/TerminalPromptIcon'
 import ActualPrompt from './ActualPrompt/ActualPrompt'
 import { enteredCommand } from './types'
 import { v4 as uuidv4 } from 'uuid'

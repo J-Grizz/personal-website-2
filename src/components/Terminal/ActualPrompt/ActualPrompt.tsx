@@ -1,6 +1,6 @@
 import { FC } from 'react'
-import TerminalCursor from 'icons/TerminalCursor'
-import TerminalPrompt from 'icons/TerminalPrompt'
+import TerminalCursor from 'icons/TerminalCursorIcon'
+import TerminalPrompt from 'icons/TerminalPromptIcon'
 import { enteredCommand } from '../types'
 import { v4 as uuidv4 } from 'uuid'
 

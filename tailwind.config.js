@@ -1,8 +1,14 @@
 module.exports = {
   theme: {
     extend: {
+      colors: {
+        'burnt-orange': '#c76454',
+        twilight: '#84526d',
+        space: '#343865',
+      },
       backgroundImage: {
-        'nature-dark': "url('/public/img/simple.jpg')",
+        'landing-background-dark': "url('/public/img/simple.jpg')",
+        'home-background-dark': "url('/public/img/elk.jpg')",
       },
       keyframes: {
         blink: {
