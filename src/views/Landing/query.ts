@@ -5,7 +5,7 @@ export const QUERY_INTRO_LINES = gql`
     allIntroLine(sort: { order: ASC }, where: {draft: {neq: true}}) {
       line
       order
-      draft
+    	draft
     }
   }
 `

@@ -1,14 +1,12 @@
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import Navbar from 'components/Navigation/Navbar/Navbar'
 import Sidebar from 'components/Navigation/Sidebar/Sidebar'
+import { useCycle } from 'framer-motion'
 
 const Navigation: FC = () => {
-  const [showSidebar, setShowSidebar] = useState(false)
+  const [showSidebar, toggleSidebar] = useCycle(false, true)
 
-  const toggleSidebar = () => {
-    setShowSidebar(!showSidebar)
-    console.log(showSidebar)
-  }
+
   return (
     <div className="w-full">
       <Navbar toggleSidebar={toggleSidebar} />

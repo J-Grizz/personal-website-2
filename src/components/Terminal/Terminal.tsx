@@ -10,6 +10,7 @@ import NavigationJSX from './NavigationJSX/NavigationJSX'
 
 interface MyProps {
   introLines?: IntroLine[]
+  loading?: boolean
 }
 
 interface MyState {
@@ -136,14 +137,11 @@ class Terminal extends React.Component<MyProps, MyState> {
         })),
     },
     {
-      command: 'navigation',
+      command: 'nav',
       description: 'Display navigation menu',
       action: () =>
         this.setState((state) => ({
-          enteredCommands: [
-            ...state.enteredCommands,
-            { command: state.typedCommand, notFound: false, jsx: <NavigationJSX validCommands={this.validCommands} /> },
-          ],
+          enteredCommands: [...state.enteredCommands, { command: state.typedCommand, notFound: false, jsx: <NavigationJSX /> }],
           typedCommand: '',
         })),
     },
@@ -152,16 +150,22 @@ class Terminal extends React.Component<MyProps, MyState> {
   render() {
     const { introArray, enteredCommands, showPrompt, typedCommand } = this.state
     return (
-      <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white overflow-auto terminal-scrollbar">
+      <div className="w-5/6 md:w-1/2 h-5/6 md:h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white overflow-auto terminal-scrollbar">
         <div className="flex flex-col">
-          <Intro introArray={introArray} />
-          <CommandResults enteredCommands={enteredCommands} />
-          <ActualPrompt
-            showPrompt={showPrompt}
-            typedCommand={typedCommand}
-            onTypedCommand={this.handleTypedCommand}
-            inputRef={this.typedCommandInput}
-          />
+          {this.props.loading ? (
+            'Loading...'
+          ) : (
+            <>
+              <Intro introArray={introArray} />
+              <CommandResults enteredCommands={enteredCommands} />
+              <ActualPrompt
+                showPrompt={showPrompt}
+                typedCommand={typedCommand}
+                onTypedCommand={this.handleTypedCommand}
+                inputRef={this.typedCommandInput}
+              />
+            </>
+          )}
         </div>
       </div>
     )
