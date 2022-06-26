@@ -2,11 +2,11 @@ import { FC } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { ValidCommand } from '../types'
 
-interface HelpJSXProps {
+interface NavigationJSXProps {
   validCommands: ValidCommand[]
 }
 
-const HelpJSX: FC<HelpJSXProps> = ({ validCommands }) => {
+const NavigationJSX: FC<NavigationJSXProps> = ({ validCommands }) => {
   return (
     <div className="m-3 ml-10">
       {validCommands.map((validCommand) => (
@@ -20,4 +20,4 @@ const HelpJSX: FC<HelpJSXProps> = ({ validCommands }) => {
   )
 }
 
-export default HelpJSX
+export default NavigationJSX

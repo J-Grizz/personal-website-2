@@ -218,7 +218,9 @@ export type IntroLine = Document & {
   _type?: Maybe<Scalars['String']>;
   /** Date the document was last modified */
   _updatedAt?: Maybe<Scalars['DateTime']>;
+  draft?: Maybe<Scalars['Boolean']>;
   line?: Maybe<Scalars['String']>;
+  order?: Maybe<Scalars['Float']>;
 };
 
 export type IntroLineFilter = {
@@ -230,7 +232,9 @@ export type IntroLineFilter = {
   _rev?: InputMaybe<StringFilter>;
   _type?: InputMaybe<StringFilter>;
   _updatedAt?: InputMaybe<DatetimeFilter>;
+  draft?: InputMaybe<BooleanFilter>;
   line?: InputMaybe<StringFilter>;
+  order?: InputMaybe<FloatFilter>;
 };
 
 export type IntroLineSorting = {
@@ -240,7 +244,9 @@ export type IntroLineSorting = {
   _rev?: InputMaybe<SortOrder>;
   _type?: InputMaybe<SortOrder>;
   _updatedAt?: InputMaybe<SortOrder>;
+  draft?: InputMaybe<SortOrder>;
   line?: InputMaybe<SortOrder>;
+  order?: InputMaybe<SortOrder>;
 };
 
 export type RootQuery = {
@@ -727,13 +733,15 @@ export type StringFilter = {
 export type FetchIntroLinesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type FetchIntroLinesQuery = { __typename?: 'RootQuery', allIntroLine: Array<{ __typename?: 'IntroLine', line?: string | null }> };
+export type FetchIntroLinesQuery = { __typename?: 'RootQuery', allIntroLine: Array<{ __typename?: 'IntroLine', line?: string | null, order?: number | null, draft?: boolean | null }> };
 
 
 export const FetchIntroLinesDocument = gql`
     query fetchIntroLines {
-  allIntroLine {
+  allIntroLine(sort: {order: ASC}, where: {draft: {neq: true}}) {
     line
+    order
+    draft
   }
 }
     `;

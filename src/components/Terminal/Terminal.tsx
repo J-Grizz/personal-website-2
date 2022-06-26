@@ -6,6 +6,7 @@ import { IntroLine } from 'generated/graphql'
 import Intro from './Intro/Intro'
 import HelpJSX from './HelpJSX/HelpJSX'
 import CommandNotFoundJSX from './CommandNotFoundJSX/CommandNotFound'
+import NavigationJSX from './NavigationJSX/NavigationJSX'
 
 interface MyProps {
   introLines?: IntroLine[]
@@ -31,6 +32,8 @@ class Terminal extends React.Component<MyProps, MyState> {
     let starterArray = this.props.introLines?.map((line) => line.line)
 
     const createTypingEffect = async (text: string, index: number) => {
+      // Sneaky trick to make typing effect pause at the end of each line
+      text += '  .   .   .   '
       return Promise.all(
         text.split('').map(
           (character, characterIndex) =>
@@ -44,7 +47,7 @@ class Terminal extends React.Component<MyProps, MyState> {
                   ],
                 }))
                 res(null)
-              }, 100 * characterIndex)
+              }, 90 * characterIndex)
             })
         )
       )
@@ -132,13 +135,24 @@ class Terminal extends React.Component<MyProps, MyState> {
           typedCommand: '',
         })),
     },
-    { command: 'goto', description: 'Choose which page to go to', action: () => {} },
+    {
+      command: 'navigation',
+      description: 'Display navigation menu',
+      action: () =>
+        this.setState((state) => ({
+          enteredCommands: [
+            ...state.enteredCommands,
+            { command: state.typedCommand, notFound: false, jsx: <NavigationJSX validCommands={this.validCommands} /> },
+          ],
+          typedCommand: '',
+        })),
+    },
   ]
 
   render() {
     const { introArray, enteredCommands, showPrompt, typedCommand } = this.state
     return (
-      <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white">
+      <div className="w-1/2 h-1/2 p-5 flex items-start justify-start bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 rounded text-white overflow-auto terminal-scrollbar">
         <div className="flex flex-col">
           <Intro introArray={introArray} />
           <CommandResults enteredCommands={enteredCommands} />

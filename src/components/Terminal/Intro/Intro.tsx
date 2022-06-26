@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import TerminalPrompt from 'icons/TerminalPromptIcon'
+import TerminalPromptIcon from 'icons/TerminalPromptIcon'
 import { v4 as uuidv4 } from 'uuid'
 
 interface IntroProps {
@@ -10,8 +10,8 @@ const Intro: FC<IntroProps> = ({ introArray }) => {
   return (
     <>
       {introArray.map((introLine) => (
-        <div className="flex items-center" key={uuidv4()}>
-          <TerminalPrompt />
+        <div className="flex items-start" key={uuidv4()}>
+          <TerminalPromptIcon />
           <p>{introLine}</p>
         </div>
       ))}
