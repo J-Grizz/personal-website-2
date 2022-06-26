@@ -9,7 +9,7 @@ const Navigation: FC = () => {
 
   return (
     <div className="w-full">
-      <Navbar toggleSidebar={toggleSidebar} />
+      <Navbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
       <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
     </div>
   )

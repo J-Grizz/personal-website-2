@@ -9,8 +9,14 @@ const Navigation: FC = () => {
   return (
     <AnimatePresence>
       <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Landing />}></Route>
+        <Route path="/" element={<Landing />} />
         <Route path="home" element={<Home />} />
+        {/* <Route path="projects" element={<Projects />}>
+          <Route path=":projectId" />
+        </Route>
+        <Route path="blogs" element={<Blogs />}>
+          <Route path=":blogId" />
+        </Route> */}
       </Routes>
     </AnimatePresence>
   )

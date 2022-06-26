@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { ApolloProvider, ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
 
-import AnimatedRouter from 'components/AnimationRouter/AnimatedRouter'
+import AnimatedRouter from 'components/Router/AnimatedRouter'
 
 const httpLink = createHttpLink({
   uri: 'https://kg45t4h8.api.sanity.io/v1/graphql/production/default',
