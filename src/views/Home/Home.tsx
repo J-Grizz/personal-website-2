@@ -14,7 +14,8 @@ const Home: FC = () => {
       <div className="fixed w-full h-full backdrop-filter backdrop-blur-sm">
         <div className="flex flex-col justify-center items-center h-full">
           <div className="text-white flex flex-col items-center">
-            <h1 className="text-3xl">Hi, Im James Gray</h1> <Emoji label="waving hand emoji" symbol="👋" />
+            <h1 className="text-3xl">Hi, Im James Gray, a professional web developer</h1>{' '}
+            <Emoji className='text-3xl mt-8' label="waving hand emoji" symbol="👋" />
           </div>
         </div>
       </div>
