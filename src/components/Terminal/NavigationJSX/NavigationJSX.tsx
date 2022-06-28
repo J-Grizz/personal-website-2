@@ -1,20 +1,7 @@
 import { FC } from 'react'
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom'
 
-interface NavigationJSXProps {
-  // validCommands: ValidCommand[]
-}
-
-const links = []
-
-// Home
-// About
-// Projects
-// Blogs
-// LinkedIn
-// Github
-
-
+interface NavigationJSXProps {}
 
 const NavigationJSX: FC<NavigationJSXProps> = () => {
   return (
