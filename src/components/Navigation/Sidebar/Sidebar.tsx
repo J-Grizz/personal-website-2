@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { DataLink } from 'components/Navigation/types'
 import SidebarNav from './SidebarNav/SidebarNav'
 
-interface Props {
+interface SidebarProps {
   showSidebar: boolean
   toggleSidebar: () => void
 }
@@ -16,7 +16,7 @@ const dataLinks: DataLink[] = [
   { path: 'https://github.com/J-Grizz', name: 'Github', external: true },
 ]
 
-const Sidebar: FC<Props> = ({ toggleSidebar, showSidebar }) => {
+const Sidebar: FC<SidebarProps> = ({ toggleSidebar, showSidebar }) => {
   return (
     <AnimatePresence>
       {showSidebar && (
