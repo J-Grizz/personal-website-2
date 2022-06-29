@@ -1,6 +1,9 @@
 module.exports = {
   theme: {
     extend: {
+      fontFamily: {
+        'roboto-mono': ['"Roboto Mono"', 'cursive']
+      },
       colors: {
         'burnt-orange': '#c76454',
         twilight: '#84526d',

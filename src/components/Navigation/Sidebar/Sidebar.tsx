@@ -2,7 +2,7 @@ import { FC } from 'react'
 import CloseIcon from 'icons/CloseIcon'
 import { AnimatePresence, motion } from 'framer-motion'
 import { DataLink } from 'components/Navigation/types'
-import SidebarNav from './SidebarNav/SidebarNav'
+import SidebarNav from '../SidebarNav/SidebarNav'
 
 interface SidebarProps {
   showSidebar: boolean
@@ -40,7 +40,7 @@ const Sidebar: FC<SidebarProps> = ({ toggleSidebar, showSidebar }) => {
             }}
             className={`fixed top-0 right-0 h-full w-full sm:w-3/5 lg:w-2/5 z-40 bg-space bg-opacity-70 p-10 pl-20 text-white `}
           >
-            <CloseIcon className="absolute top-6 right-6 cursor-pointer" onClick={toggleSidebar} />
+            <CloseIcon className="absolute top-5 right-5 h-10 cursor-pointer" onClick={toggleSidebar} />
             <SidebarNav dataLinks={dataLinks} />
           </motion.aside>
         </>
