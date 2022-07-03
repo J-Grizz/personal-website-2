@@ -3,12 +3,12 @@ import HamburgerIcon from 'icons/HamburgerIcon'
 import TerminalIcon from 'icons/TerminalIcon'
 import { Link } from 'react-router-dom'
 
-interface NavbarProps {
+interface TopbarProps {
   toggleSidebar: () => void
   showSidebar: boolean
 }
 
-const Navbar: FC<NavbarProps> = ({ toggleSidebar, showSidebar }) => {
+const Topbar: FC<TopbarProps> = ({ toggleSidebar, showSidebar }) => {
   const [hamburgerNoticed, setHamburgerNoticed] = useState(false)
 
   const handleHamburgerClick = () => {
@@ -16,7 +16,7 @@ const Navbar: FC<NavbarProps> = ({ toggleSidebar, showSidebar }) => {
     toggleSidebar()
   }
   return (
-    <nav className="z-10 w-full h-16 p-2 px-6 flex items-start justify-between bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 text-white">
+    <div className="z-10 w-full h-16 p-2 px-6 flex items-start justify-between bg-clip-padding bg-slate-900 backdrop-filter backdrop-blur-xl bg-opacity-60 border border-gray-900 text-white">
       <Link className="h-full" to="/home">
         <img className="h-full" alt="sunset logo" src={`${process.env.PUBLIC_URL}/img/logo.png`} />
       </Link>
@@ -26,8 +26,8 @@ const Navbar: FC<NavbarProps> = ({ toggleSidebar, showSidebar }) => {
           <HamburgerIcon className={`${hamburgerNoticed ? '' : 'animate-bounce'}`} onClick={handleHamburgerClick} />
         </div>
       )}
-    </nav>
+    </div>
   )
 }
 
-export default Navbar
+export default Topbar

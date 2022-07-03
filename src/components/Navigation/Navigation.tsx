@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import Navbar from 'components/Navigation/Navbar/Navbar'
+import Topbar from 'components/Navigation/Topbar/Topbar'
 import Sidebar from 'components/Navigation/Sidebar/Sidebar'
 import { useCycle } from 'framer-motion'
 
@@ -9,7 +9,7 @@ const Navigation: FC = () => {
 
   return (
     <div className="w-full">
-      <Navbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+      <Topbar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
       <Sidebar showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
     </div>
   )
