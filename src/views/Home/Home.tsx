@@ -14,7 +14,7 @@ const Home: FC = () => {
       <div className="fixed w-full h-full flex justify-center items-center backdrop-filter backdrop-blur-sm">
         <div className="relative flex flex-col items-start w-4/5">
           <h1 className="text-8xl drop-shadow-lg text-slate-100 text-white-500 leading-relaxed">
-            Hi, I'm James Gray, a professional full stack web developer
+            Hi, I'm James Gray, a professional full-stack web developer
           </h1>
           <div className="mt-24">
             <Link

@@ -12,6 +12,7 @@ module.exports = {
       backgroundImage: {
         'landing-background-dark': "url('/public/img/simple.jpg')",
         'home-background-dark': "url('/public/img/elk.jpg')",
+        'about-background-dark': "url('/public/img/camp.jpg')",
         'projects-background-dark': "url('/public/img/goonies.png')",
       },
       keyframes: {

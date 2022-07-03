@@ -6,13 +6,13 @@ import { DataLink } from 'components/Navigation/types'
 import { v4 as uuidv4 } from 'uuid'
 
 interface SidebarNavProps {
-	dataLinks: DataLink[]
+  dataLinks: DataLink[]
 }
 
-const SidebarNav: FC<SidebarNavProps> = ({dataLinks}) => {
+const SidebarNav: FC<SidebarNavProps> = ({ dataLinks }) => {
   return (
     <nav className="h-full">
-      <ul className="flex flex-col text-4xl lg:text-5xl h-1/2 lg:h-3/5 justify-around">
+      <ul className="flex flex-col text-4xl lg:text-5xl h-1/2 lg:h-4/6 justify-around">
         {dataLinks.map(({ path, name, external }) => (
           <motion.li initial="rest" whileHover="hover" animate="rest" className="max-w-fit" key={uuidv4()}>
             {external ? (

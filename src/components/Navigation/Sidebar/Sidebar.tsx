@@ -11,6 +11,7 @@ interface SidebarProps {
 
 const dataLinks: DataLink[] = [
   { path: '/home', name: 'Home', external: false },
+  { path: '/about', name: 'About', external: false },
   { path: '/projects', name: 'Work Portfolio', external: false },
   { path: 'https://www.linkedin.com/in/jamesergray', name: 'LinkedIn', external: true },
   { path: 'https://github.com/J-Grizz', name: 'Github', external: true },
