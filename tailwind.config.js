@@ -2,7 +2,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'roboto-mono': ['"Roboto Mono"', 'cursive']
+        'roboto-mono': ['"Roboto Mono"', 'cursive'],
       },
       colors: {
         'burnt-orange': '#c76454',
@@ -22,6 +22,10 @@ module.exports = {
       },
       animation: {
         'blinking-cursor': 'blink 1s step-end infinite',
+      },
+      fontSize: {
+        '10xl': '10rem',
+        '12xl': '12rem',
       },
     },
   },

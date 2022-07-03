@@ -1,12 +1,12 @@
 import { FC } from 'react'
 
-const HamburgerIcon: FC<React.HTMLAttributes<SVGSVGElement>> = ({ onClick }) => {
+const HamburgerIcon: FC<React.HTMLAttributes<SVGSVGElement>> = ({ onClick, className }) => {
   return (
-    <i className='h-full'>
+    <i className="h-full">
       <svg
         onClick={onClick}
         xmlns="http://www.w3.org/2000/svg"
-        className="h-full w-full cursor-pointer"
+        className={`h-full w-full cursor-pointer ${className}`}
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
