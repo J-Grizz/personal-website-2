@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import CloseIcon from 'icons/CloseIcon'
 import { AnimatePresence, motion } from 'framer-motion'
 import { DataLink } from 'components/Navigation/types'
@@ -10,14 +10,27 @@ interface SidebarProps {
 }
 
 const dataLinks: DataLink[] = [
-  { path: '/home', name: 'Home', external: false },
-  { path: '/about', name: 'About', external: false },
-  { path: '/projects', name: 'Work Portfolio', external: false },
-  { path: 'https://www.linkedin.com/in/jamesergray', name: 'LinkedIn', external: true },
-  { path: 'https://github.com/J-Grizz', name: 'Github', external: true },
+  { path: '/home', name: 'Home', external: false, current: false },
+  { path: '/about', name: 'About', external: false, current: false },
+  { path: '/projects', name: 'Work Portfolio', external: false, current: false },
+  { path: 'https://www.linkedin.com/in/jamesergray', name: 'LinkedIn', external: true, current: false },
+  { path: 'https://github.com/J-Grizz', name: 'Github', external: true, current: false },
 ]
 
 const Sidebar: FC<SidebarProps> = ({ toggleSidebar, showSidebar }) => {
+  const [dataLinkState, setDataLinkState] = useState(dataLinks)
+
+  useEffect(() => {
+    const dataLinksUpdated: DataLink[] = dataLinkState.map(({ path, ...rest }) => {
+      return {
+        path: path,
+        ...rest,
+        current: path === window.location.pathname,
+      }
+    })
+    setDataLinkState(dataLinksUpdated)
+  }, [])
+
   return (
     <AnimatePresence>
       {showSidebar && (
@@ -42,7 +55,7 @@ const Sidebar: FC<SidebarProps> = ({ toggleSidebar, showSidebar }) => {
             className={`fixed top-0 right-0 h-full w-full sm:w-3/5 lg:w-2/5 z-40 bg-space bg-opacity-70 p-10 pl-20 text-white `}
           >
             <CloseIcon className="absolute top-5 right-5 h-10 cursor-pointer" onClick={toggleSidebar} />
-            <SidebarNav dataLinks={dataLinks} />
+            <SidebarNav dataLinks={dataLinkState} />
           </motion.aside>
         </>
       )}
